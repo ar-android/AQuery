@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.aquery.BuildConfig;
 import com.aquery.listener.QueryNetworkByteListener;
@@ -20,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.HttpUrl;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -79,6 +81,17 @@ public class QueryNetwork {
         return this;
     }
 
+    public QueryNetwork get(Map<String, String> params) {
+        HttpUrl.Builder httpBuider = HttpUrl.parse(url).newBuilder();
+        if (params != null) {
+            for (Map.Entry<String, String> param : params.entrySet()) {
+                httpBuider.addQueryParameter(param.getKey(), param.getValue());
+            }
+        }
+        request = new Request.Builder().url(httpBuider.build()).get().build();
+        return this;
+    }
+
     public void get(QueryNetworkListener listener) {
         request = new Request.Builder()
                 .url(url)
@@ -111,13 +124,13 @@ public class QueryNetwork {
     }
 
     private void isShowLoading() {
-        if (showLoading){
+        if (showLoading) {
             mProgressDialog.show();
         }
     }
 
     private void isHideLoading() {
-        if (showLoading){
+        if (showLoading) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
@@ -128,19 +141,19 @@ public class QueryNetwork {
         new Handler(Looper.getMainLooper()).post(runnable);
     }
 
-    private void runOnBackground(Runnable runnable){
+    private void runOnBackground(Runnable runnable) {
         new Thread(runnable).start();
     }
 
-    private  <T> T toObject(String json, Class<T> classOfT) {
+    private <T> T toObject(String json, Class<T> classOfT) {
         return gson.fromJson(json, classOfT);
     }
 
     public <T> void toObject(final Class<T> clazz, final QueryNetworkObjectListener<T> listener) {
         response((response, error) -> {
-            if (response != null){
+            if (response != null) {
                 listener.response(toObject(response, clazz), null);
-            }else{
+            } else {
                 listener.response(null, error);
             }
         });

@@ -1,14 +1,17 @@
 package com.aquery;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -39,6 +42,20 @@ public class AQuery {
     public AQuery(Context context) {
         this.context = context;
         rootView = ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
+        queryView = new QueryView(context);
+        queryNetwork = new QueryNetwork(context);
+        alert = new AlertDialog.Builder(context);
+        loader = new Loader(context);
+        pref = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        gson = new GsonBuilder()
+                .serializeNulls()
+                .setPrettyPrinting()
+                .create();
+    }
+
+    public AQuery(Context context, View rootView) {
+        this.context = context;
+        this.rootView = rootView;
         queryView = new QueryView(context);
         queryNetwork = new QueryNetwork(context);
         alert = new AlertDialog.Builder(context);
@@ -107,6 +124,10 @@ public class AQuery {
         context.startActivity(intent);
     }
 
+    public void open(Intent intent) {
+        context.startActivity(intent);
+    }
+
     public void openFromRight(Class clazz) {
         open(clazz);
         ((Activity) context).overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
@@ -114,6 +135,16 @@ public class AQuery {
 
     public void openFromLeft(Class clazz) {
         open(clazz);
+        ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+    }
+
+    public void openFromRight(Intent intent) {
+        open(intent);
+        ((Activity) context).overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+    }
+
+    public void openFromLeft(Intent intent) {
+        open(intent);
         ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
@@ -135,6 +166,30 @@ public class AQuery {
 
     public String toJson(Object object) {
         return gson.toJson(object);
+    }
+
+    public QueryView view(View itemView) {
+        return queryView.setView(itemView);
+    }
+
+    public int getIntIntent(String key) {
+        Activity activity = (Activity) this.context;
+        return activity.getIntent().getIntExtra(key, 0);
+    }
+
+    public String getStringIntent(String key) {
+        Activity activity = (Activity) this.context;
+        return activity.getIntent().getStringExtra(key);
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+    public void setBackIndicator() {
+        android.support.v7.app.ActionBar actionBar = ((AppCompatActivity) context).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white);
+        }
     }
 
 }

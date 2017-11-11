@@ -1,1 +1,1 @@
-include ':app', ':aquery'
+include ':app', ':aquery', ':filemku'
