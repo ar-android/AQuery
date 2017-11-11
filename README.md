@@ -1,67 +1,63 @@
 # AQuery
 
-AQuery is like JQuery for android, inspired by Android Query for a lot of utility query for doing stuff on android development.
+AQuery is like JQuery but it for android. AQuery allows the developer to write less and do more like Query View, Query Network and more.
 
 ## Getting Started
 
-Coming Soon
+To use this library Add in you top build.gradle :
 
-### Prerequisites
-
-Coming Soon
-
-```
-Coming Soon
-```
-
-### Installing
-
-Coming Soon
-
-```
-Coming Soon
+```gradle
+allprojects {
+    repositories {
+      maven { url 'https://jitpack.io' }
+    }
+  }
 ```
 
-And repeat
+Setup java 8 compiler for enable lambada expression in you app build.gradle :
 
-```
-Coming Soon
-```
-Coming Soon
-
-## Running the tests
-
-Coming Soon
-
-### Break down into end to end tests
-
-Coming Soon
-
-```
-Give an example
+```gradle
+compileOptions {
+  sourceCompatibility 1.8
+  targetCompatibility 1.8
+}
 ```
 
-### And coding style tests
+Add in you app build.gradle :
 
-Coming Soon
-
-```
-Give an example
+```gradle
+    implementation 'com.github.ar-android:AQuery:v1.0.0'
 ```
 
-## Deployment
+## UseCase
 
-Coming Soon
+As we have metion before AQuery is just like JQuery but for quering in android. Bellow example of use case.
+
+Before using AQuery :
+
+```java
+Button login = findViewById(R.id.login);
+login.setOnClickListener(new View.OnClickListenner(){
+    @Override
+    public void onClick(View v) {
+      // Do stuff
+    }
+})
+```
+
+After using AQuery :
+```java
+aq.id(R.id.login).click(v -> {
+  // Do stuff
+});
+```
+
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+* [Okhttp](https://github.com/square/okhttp) - Networking Library.
+* [Glide](https://github.com/bumptech/glide) - Image Loading and caching.
+* [Gson](https://github.com/google/gson) - A Java serialization/deserialization
 
 ## Versioning
 
@@ -71,15 +67,8 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 * **Ahmad Rosid** - *Initial work* - [Ahmad Rosid](https://github.com/ar-android)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/ar-android/AQuery/contributors) who participated in this project.
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
-
