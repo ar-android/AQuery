@@ -5,23 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimary"
+    android:padding="15dp"
     tools:context="com.ahmadrosid.aquery.MainActivity">
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="200dp" />
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
 
     <Button
-        android:id="@+id/click_login"
+        android:id="@+id/click_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"/>
+        android:layout_marginTop="15dp"
+        android:text="Logout" />
 
 </LinearLayout>

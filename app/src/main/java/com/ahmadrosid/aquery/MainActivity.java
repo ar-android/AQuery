@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.aquery.AQuery;
 import com.aquery.listener.QueryNetworkListener;
+import com.aquery.listener.QueryNetworkObjectListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,55 +22,20 @@ public class MainActivity extends AppCompatActivity {
 
         aq = new AQuery(this);
 
-        aq.id(R.id.image).image(R.drawable.rosid);
-        aq.id(R.id.text).text("Ahmad Rosid");
-
-//        aq.id(R.id.image).image("https://goo.gl/Yfue18");
-
-        aq.id(R.id.click_login).click(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-
-        Map<String, String> params = new HashMap<>();
-        params.put("nama", "Ahmad Rosid");
-        aq.ajax("https://ocit-tutorial.herokuapp.com/index.php")
-                .post(params)
+        aq.ajax("https://api.github.com/users/ar-android")
+                .get()
                 .showLoading()
-                .response(new QueryNetworkListener() {
-                    @Override
-                    public void response(String response, Throwable error) {
-                        if (response != null){
-                            aq.alert(response);
-                        }
+                .toObject(GithubUsers.class, (user, error) -> {
+                    if (error != null){
+                        aq.alert(error.getMessage());
+                    }else{
+                        aq.id(R.id.image).image(user.getAvatar_url()).rounded();
+                        aq.id(R.id.name).text(user.getName());
+                        aq.id(R.id.location).text(user.getLocation());
                     }
                 });
 
-//        aq.ajax("https://api.github.com/users/ar-android")
-//                .get()
-//                .showLoading()
-//                .toByte(new QueryNetworkByteListener() {
-//                    @Override
-//                    public void response(byte[] bytes, Throwable throwable) {
-//                        int length = bytes.length;
-//                        aq.alert(String.valueOf(length));
-//                    }
-//                });
-
-//        aq.ajax("https://api.github.com/users/ar-android")
-//                .get()
-//                .showLoading()
-//                .toObject(GithubUsers.class, new QueryNetworkObjectListener<GithubUsers>() {
-//                    @Override
-//                    public void response(GithubUsers response, Throwable error) {
-//                        if (error != null){
-//                            aq.alert(error.getMessage());
-//                        }else{
-//                            aq.alert(response.getName());
-//                        }
-//                    }
-//                });
+        aq.id(R.id.click_logout).click(v -> aq.closeToLeft());
 
     }
 }

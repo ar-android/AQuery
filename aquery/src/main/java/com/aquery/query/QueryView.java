@@ -8,7 +8,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aquery.utils.ImageRounded;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 
 /**
  * Created by ocittwo on 11/11/17.
@@ -16,11 +18,14 @@ import com.bumptech.glide.Glide;
 
 public class QueryView {
 
+    private RequestManager requestManager;
     private View view;
     private Context context;
+    private Object source;
 
     public QueryView(Context context) {
         this.context = context;
+        requestManager = Glide.with(context);
     }
 
     public QueryView setView(View view) {
@@ -56,13 +61,13 @@ public class QueryView {
         }
     }
 
-    public void image(Object source){
+    public QueryView image(Object source){
+        this.source = source;
         if (view instanceof ImageView){
             ImageView imageView = (ImageView) view;
-            Glide.with(context)
-                    .load(source)
-                    .into(imageView);
+            requestManager.load(source).into(imageView);
         }
+        return this;
     }
 
     public void click(View.OnClickListener clickListener){
@@ -80,6 +85,16 @@ public class QueryView {
             }
         }else{
             return false;
+        }
+    }
+
+    public void rounded() {
+        if (view instanceof ImageView){
+            ImageView imageView = (ImageView) view;
+            requestManager.clear(imageView);
+            requestManager.asBitmap()
+                    .load(source)
+                    .into(new ImageRounded(imageView));
         }
     }
 }

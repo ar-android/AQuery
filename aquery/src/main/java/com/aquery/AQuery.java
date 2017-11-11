@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.aquery.query.QueryNetwork;
@@ -26,9 +27,11 @@ public class AQuery {
 
     private Context context;
     private View rootView;
-    private AlertDialog.Builder alert;
+
     private QueryView queryView;
     private QueryNetwork queryNetwork;
+
+    private AlertDialog.Builder alert;
     private Loader loader;
     private SharedPreferences pref;
     private Gson gson;
@@ -63,6 +66,18 @@ public class AQuery {
         alert.show();
     }
 
+    public void hideKeyboard() {
+        Activity activity = (Activity) context;
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     public void toast(String messages) {
         Toast.makeText(context, messages, Toast.LENGTH_SHORT).show();
     }
@@ -79,7 +94,7 @@ public class AQuery {
         loader.hide();
     }
 
-    public void putString(String key, String value) {
+    public void saveString(String key, String value) {
         pref.edit().putString(key, value).apply();
     }
 
@@ -103,11 +118,15 @@ public class AQuery {
     }
 
     public void closeToRight() {
-        ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        Activity activity = (Activity) this.context;
+        activity.finish();
+        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
     public void closeToLeft() {
-        ((Activity) context).overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+        Activity activity = (Activity) this.context;
+        activity.finish();
+        activity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
 
     public <T> T toObject(String json, Class<T> classOfT) {
