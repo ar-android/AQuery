@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8"><!-- Begin Jekyll SEO tag v2.3.0 -->
+  <title>AQuery | Utility query for android.</title>
+  <meta content="AQuery" property="og:title">
+  <meta content="en_US" property="og:locale">
+  <meta content="Utility query for android" name="description">
+  <meta content="Utility query for android" property="og:description">
+  <link href="https://ar-android.github.io/AQuery/" rel="canonical">
+  <meta content="https://ar-android.github.io/AQuery/" property="og:url">
+  <meta content="Cayman theme" property="og:site_name">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="#157878" name="theme-color">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href="css/style.css" rel="stylesheet" type='text/css'>
+</head>
+<body>
+  <section class="page-header">
+    <h1 class="project-name">AQuery</h1>
+    <h2 class="project-tagline">Utility query for android.</h2><a class="btn" href="https://github.com/ar-android/AQuery">View on GitHub</a> <a class="btn" href="https://github.com/ar-android/AQuery">Download .zip</a> <a class="btn" href="https://github.com/ar-android/AQuery">Download .tar.gz</a>
+  </section>
+  <section class="main-content">
+    <article class="markdown-body entry-content" itemprop="text">
+      <h1>AQuery</h1>
+      <p>AQuery is like JQuery but it for android. AQuery allows the developer to write less and do more like Query View, Query Network and more.</p>
+      <h2><a aria-hidden="true" class="anchor" href="#getting-started" id="user-content-getting-started"></a>Getting Started</h2>
+      <p>To use this library Add in you top build.gradle :</p>
+      <div class="highlight highlight-source-groovy-gradle">
+        <pre><span class="pl-en">allprojects</span> {
+    repositories {
+      maven { url <span class="pl-s"><span class="pl-pds">'</span>https://jitpack.io<span class="pl-pds">'</span></span> }
+    }
+  }</pre>
+      </div>
+      <p>Setup java 8 compiler for enable lambada expression in you app build.gradle :</p>
+      <div class="highlight highlight-source-groovy-gradle">
+        <pre><span class="pl-en">compileOptions</span> {
+  sourceCompatibility <span class="pl-c1">1.8</span>
+  targetCompatibility <span class="pl-c1">1.8</span>
+}</pre>
+      </div>
+      <p>Add in you app build.gradle :</p>
+      <div class="highlight highlight-source-groovy-gradle">
+        <pre>implementation <span class="pl-s"><span class="pl-pds">'</span>com.github.ar-android:AQuery:v1.0.0<span class="pl-pds">'</span></span></pre>
+      </div>
+      <h2><a aria-hidden="true" class="anchor" href="#usecase" id="user-content-usecase"></a>UseCase</h2>
+      <p>As we have metion before AQuery is just like JQuery but for quering in android. Bellow example of use case.</p>
+      <p>Before using AQuery :</p>
+      <div class="highlight highlight-source-java">
+        <pre><span class="pl-smi">Button</span> login <span class="pl-k">=</span> findViewById(<span class="pl-smi">R</span><span class="pl-k">.</span>id<span class="pl-k">.</span>login);
+login<span class="pl-k">.</span>setOnClickListener(<span class="pl-k">new</span> <span class="pl-smi">View</span>.<span class="pl-smi">OnClickListenner</span>(){
+    <span class="pl-k">@Override</span>
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">onClick</span>(<span class="pl-smi">View</span> <span class="pl-v">v</span>) {
+      <span class="pl-c"><span class="pl-c">//</span> Do stuff</span>
+    }
+})</pre>
+      </div>
+      <p>After using AQuery :</p>
+      <div class="highlight highlight-source-java">
+        <pre>aq<span class="pl-k">.</span>id(<span class="pl-smi">R</span><span class="pl-k">.</span>id<span class="pl-k">.</span>login)<span class="pl-k">.</span>click(v <span class="pl-k">-</span><span class="pl-k">&gt;</span> {
+  <span class="pl-c"><span class="pl-c">//</span> Do stuff</span>
+});</pre>
+      </div>
+      <p>Also you can do ajax request like this :</p>
+      <div class="highlight highlight-source-java">
+        <pre>aq <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">AQuery</span>(<span class="pl-c1">this</span>);
+
+aq<span class="pl-k">.</span>ajax(<span class="pl-s"><span class="pl-pds">"</span>https://api.github.com/users/ar-android<span class="pl-pds">"</span></span>)
+        .get()
+        .showLoading()
+        .toObject(<span class="pl-smi">GithubUsers</span><span class="pl-k">.</span>class, (user, error) <span class="pl-k">-</span><span class="pl-k">&gt;</span> {
+            <span class="pl-c"><span class="pl-c">//</span> Do stuff</span>
+        });
+</pre>
+      </div>
+      <p>And you can ajax request post too :</p>
+      <div class="highlight highlight-source-java">
+        <pre><span class="pl-k">Map&lt;<span class="pl-smi">String</span>, <span class="pl-smi">String</span>&gt;</span> params <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">HashMap&lt;&gt;</span>();
+params<span class="pl-k">.</span>put(<span class="pl-s"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>, aq<span class="pl-k">.</span>id(<span class="pl-smi">R</span><span class="pl-k">.</span>id<span class="pl-k">.</span>email)<span class="pl-k">.</span>text());
+params<span class="pl-k">.</span>put(<span class="pl-s"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>, aq<span class="pl-k">.</span>id(<span class="pl-smi">R</span><span class="pl-k">.</span>id<span class="pl-k">.</span>password)<span class="pl-k">.</span>text());
+
+aq<span class="pl-k">.</span>ajax(<span class="pl-s"><span class="pl-pds">"</span>https://ocit-tutorial.herokuapp.com/index.php<span class="pl-pds">"</span></span>)
+        .post(params)
+        .showLoading()
+        .response((response, error) <span class="pl-k">-</span><span class="pl-k">&gt;</span> {
+            <span class="pl-k">if</span> (response <span class="pl-k">!=</span> <span class="pl-c1">null</span>){
+                aq<span class="pl-k">.</span>openFromRight(<span class="pl-smi">MainActivity</span><span class="pl-k">.</span>class);
+            }
+        });
+</pre>
+      </div>
+      <p>And you can too bind image to image view :</p>
+      <div class="highlight highlight-source-java">
+        <pre><span class="pl-c"><span class="pl-c">//</span> If you want rounded image</span>
+aq<span class="pl-k">.</span>id(<span class="pl-smi">R</span><span class="pl-k">.</span>id<span class="pl-k">.</span>image)<span class="pl-k">.</span>image(user<span class="pl-k">.</span>getAvatar_url())<span class="pl-k">.</span>rounded();
+
+<span class="pl-c"><span class="pl-c">//</span> If you want set from drawable</span>
+aq<span class="pl-k">.</span>id(<span class="pl-smi">R</span><span class="pl-k">.</span>id<span class="pl-k">.</span>image)<span class="pl-k">.</span>image(<span class="pl-smi">R</span><span class="pl-k">.</span>drawable<span class="pl-k">.</span>profile);
+</pre>
+      </div>
+      <p>And AQuery have a lot of API check it on <a href="https://ar-android.github.io/AQuery">Documentation</a></p>
+      <h2><a aria-hidden="true" class="anchor" href="#built-with" id="user-content-built-with"></a>Built With</h2>
+      <ul>
+        <li>
+          <a href="https://github.com/square/okhttp">Okhttp</a> - Networking Library.
+        </li>
+        <li>
+          <a href="https://github.com/bumptech/glide">Glide</a> - Image Loading and caching.
+        </li>
+        <li>
+          <a href="https://github.com/google/gson">Gson</a> - A Java serialization/deserialization for JSON.
+        </li>
+      </ul>
+      <h2><a aria-hidden="true" class="anchor" href="#authors" id="user-content-authors"></a>Authors</h2>
+      <ul>
+        <li>
+          <strong>Ahmad Rosid</strong> - <em>Initial work</em> - <a href="https://github.com/ar-android">Ahmad Rosid</a>
+        </li>
+      </ul>
+      <p>See also the list of <a href="https://github.com/ar-android/AQuery/contributors">contributors</a> who participated in this project.</p>
+      <h1><a aria-hidden="true" class="anchor" href="#license" id="user-content-license"></a>License</h1>
+      <pre><code>Copyright 2017 Ahmad Rosid
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+    </article>
+  </section>
+</body>
+</html>
