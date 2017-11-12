@@ -1,6 +1,6 @@
 # AQuery
 
-AQuery is like JQuery but it for android. AQuery allows the developer to write less and do more like Query View, Query Network and more.
+AQuery is like JQuery but it for android. AQuery allows the developer to write less and do more for managing element of android like Activity, View, Network, Caching and many more.
 
 ## Getting Started
 
