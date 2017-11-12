@@ -29,7 +29,7 @@ Add in you app build.gradle :
 implementation 'com.github.ar-android:AQuery:v1.0.0'
 ```
 
-## UseCase
+## Use Case
 
 As we have metion before AQuery is just like JQuery but for quering in android. Bellow example of use case.
 
