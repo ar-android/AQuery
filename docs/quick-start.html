@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8"><!-- Begin Jekyll SEO tag v2.3.0 -->
+  <title>Documentation | AQuery Utility query for android.</title>
+  <meta content="AQuery" property="og:title">
+  <meta content="en_US" property="og:locale">
+  <meta content="Utility query for android" name="description">
+  <meta content="Utility query for android" property="og:description">
+  <link href="https://ar-android.github.io/AQuery/" rel="canonical">
+  <meta content="https://ar-android.github.io/AQuery/" property="og:url">
+  <meta content="AQuery" property="og:site_name">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="#157878" name="theme-color">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href="../css/style.css" rel="stylesheet" type='text/css'>
+  <link href="../css/docs.css" rel="stylesheet" type='text/css'>
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="wrapper">
+      <a class="site-title" href="/">AQuery</a>
+      <nav class="site-nav">
+        <input class="nav-trigger" id="nav-trigger" type="checkbox"> <label for="nav-trigger"><span class="menu-icon"><svg height="15px" viewbox="0 0 18 15" width="18px">
+        <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z" fill="#424242"></path>
+        <path d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z" fill="#424242"></path>
+        <path d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z" fill="#424242"></path></svg></span></label>
+        <div class="trigger">
+          <a class="page-link" href="/">Home</a> <a class="page-link" href="/about">About</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <section class="page-header">
+    <h1 class="project-name">Documentation</h1>
+  </section>
+  <div id="sidebar-wrapper">
+    <ul class="sidebar-nav navigation level-1 open" id="menu">
+      <br>
+      <li>
+        <a class="menu-group-title" href="/docs">Overview</a>
+      </li>
+      <li class="sidelink hidden-md hidden-lg">
+        <a href="quick-start.html" >Quick Start</a>
+      </li>
+      <li class="sidelink hidden-md hidden-lg">
+        <a href="#" >Query View</a>
+      </li>
+      <li class="sidelink hidden-md hidden-lg">
+        <a href="#" >Query Network</a>
+      </li>
+      <li class="sidelink hidden-md hidden-lg">
+        <a href="#" >Query Activity</a>
+      </li>
+      <li class="sidelink hidden-md hidden-lg">
+        <a href="#" >Query SharedPreference</a>
+      </li>
+      <li class="sidelink hidden-md hidden-lg">
+        <a href="#" >Query RecyclerView</a>
+      </li>
+    </ul>
+  </div>
+  <div id="wrapper">
+    <div class="documentation-wrapper">
+      <div id="documentation">
+        <h1>Quick Start</h1>
+        <p>Thank you for having interest in this library!
+          <br>In this section, I'll show some quick instructions for introducing this library into your app.</p>
+        <h2>1. Dependencies</h2>
+        <p>This library is published to the Jitpack package repository, so you can use it through Gradle/Maven.<br>You can use it in Eclipse, but Android Studio (or Gradle) is recommended.In Quick start guide, we assume you're using Android Studio.</p>
+        <h3>build.gradle</h3>
+        <div class="highlight">
+        <pre><span class="pl-en">allprojects</span> {
+    repositories {
+      maven { url <span class="pl-s"><span class="pl-pds">'</span>https://jitpack.io<span class="pl-pds">'</span></span> }
+    }
+}</pre></div>
+        <h3>app/build.gradle</h3>
+        <p>Enable java 8 compiler to activate lambada expression for this we recomend to use android studio 3.0 :</p>
+        <div class="highlight highlight-source-groovy-gradle"><pre><span class="pl-en">android</span> {
+    compileOptions {
+        targetCompatibility <span class="pl-c1">1.8</span>
+        sourceCompatibility <span class="pl-c1">1.8</span>
+    }
+}
+
+<span class="pl-en">dependencies</span> {
+    implementation <span class="pl-s"><span class="pl-pds">'</span>com.github.ar-android:AQuery:v1.0.0<span class="pl-pds">'</span></span>
+}</pre></div>
+      <h2>Activity</h2>
+      <p>Now let's use AQuery in our Activity. In this example we would like to create simple apps that have a login functionality.</p>
+      <p>So, let's create a class <strong>LoginActivity</strong> : </p>
+
+      <div class="highlight highlight-source-java"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">ApaActivity</span> <span class="pl-k">extends</span> <span class="pl-e">AppCompatActivity</span>{
+
+    <span class="pl-k">private</span> <span class="pl-smi">AQuery</span> aq;
+
+    <span class="pl-k">@Override</span>
+    <span class="pl-k">protected</span> <span class="pl-k">void</span> <span class="pl-en">onCreate</span>(<span class="pl-k">@Nullable</span> <span class="pl-smi">Bundle</span> <span class="pl-v">savedInstanceState</span>) {
+        <span class="pl-c1">super</span><span class="pl-k">.</span>onCreate(savedInstanceState);
+        setContentView(<span class="pl-smi">R</span><span class="pl-k">.</span>layout<span class="pl-k">.</span>activity_login);
+
+        aq <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">AQuery</span>(<span class="pl-c1">this</span>);
+
+    }
+}
+</pre></div>
+
+      <p>Now this is example of how we write less code and do more with business logic :</p>
+<div class="highlight highlight-source-java"><pre>aq<span class="pl-k">.</span>id(<span class="pl-smi">R</span><span class="pl-k">.</span>id<span class="pl-k">.</span>login)<span class="pl-k">.</span>click(v <span class="pl-k">-</span><span class="pl-k">&gt;</span> {
+    <span class="pl-k">if</span> (aq<span class="pl-k">.</span>id(<span class="pl-smi">R</span><span class="pl-k">.</span>id<span class="pl-k">.</span>input_email)<span class="pl-k">.</span>isValid() <span class="pl-k">&amp;&amp;</span> aq<span class="pl-k">.</span>id(<span class="pl-smi">R</span><span class="pl-k">.</span>id<span class="pl-k">.</span>input_password)<span class="pl-k">.</span>isValid()){
+        <span class="pl-k">Map&lt;<span class="pl-smi">String</span>, <span class="pl-smi">String</span>&gt;</span> params <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">HashMap&lt;&gt;</span>();
+        params<span class="pl-k">.</span>put(<span class="pl-s"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>, aq<span class="pl-k">.</span>id(<span class="pl-smi">R</span><span class="pl-k">.</span>id<span class="pl-k">.</span>input_email)<span class="pl-k">.</span>text());
+        params<span class="pl-k">.</span>put(<span class="pl-s"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>, aq<span class="pl-k">.</span>id(<span class="pl-smi">R</span><span class="pl-k">.</span>id<span class="pl-k">.</span>input_password)<span class="pl-k">.</span>text());
+
+        aq<span class="pl-k">.</span>ajax(<span class="pl-s"><span class="pl-pds">"</span>https://ocit-tutorial.herokuapp.com/index.php<span class="pl-pds">"</span></span>)
+                .post(params)
+                .showLoading()
+                .response((response, error) <span class="pl-k">-</span><span class="pl-k">&gt;</span> {
+                    <span class="pl-k">if</span> (response <span class="pl-k">!=</span> <span class="pl-c1">null</span>){
+                        aq<span class="pl-k">.</span>openFromRight(<span class="pl-smi">HomeActivity</span><span class="pl-k">.</span>class);
+                    }
+                });
+    }
+});</pre></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
