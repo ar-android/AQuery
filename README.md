@@ -26,7 +26,7 @@ compileOptions {
 Add in you app build.gradle :
 
 ```gradle
-    implementation 'com.github.ar-android:AQuery:v1.0.0'
+implementation 'com.github.ar-android:AQuery:v1.0.0'
 ```
 
 ## UseCase
@@ -91,10 +91,13 @@ And you can too bind image to image view :
 // If you want rounded image
 aq.id(R.id.image).image(user.getAvatar_url()).rounded();
 
-// If you want binding from drawable
+// If you want set from drawable
 aq.id(R.id.image).image(R.drawable.profile);
 
 ```
+
+And AQuery have a lot of API check it on [Documentation](https://ar-android.github.io/AQuery)
+
 ## Built With
 
 * [Okhttp](https://github.com/square/okhttp) - Networking Library.
@@ -107,6 +110,18 @@ aq.id(R.id.image).image(R.drawable.profile);
 
 See also the list of [contributors](https://github.com/ar-android/AQuery/contributors) who participated in this project.
 
-## License
+# License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+    Copyright 2017 Ahmad Rosid
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
