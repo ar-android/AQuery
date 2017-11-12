@@ -52,16 +52,54 @@ aq.id(R.id.login).click(v -> {
 });
 ```
 
+Also you can do ajax request like this :
 
+```java
+
+aq = new AQuery(this);
+
+aq.ajax("https://api.github.com/users/ar-android")
+        .get()
+        .showLoading()
+        .toObject(GithubUsers.class, (user, error) -> {
+            // Do stuff
+        });
+
+```
+
+And you can ajax request post too :
+
+```java
+Map<String, String> params = new HashMap<>();
+params.put("email", aq.id(R.id.email).text());
+params.put("password", aq.id(R.id.password).text());
+
+aq.ajax("https://ocit-tutorial.herokuapp.com/index.php")
+        .post(params)
+        .showLoading()
+        .response((response, error) -> {
+            if (response != null){
+                aq.openFromRight(MainActivity.class);
+            }
+        });
+
+```
+
+And you can too bind image to image view :
+
+```java
+// If you want rounded image
+aq.id(R.id.image).image(user.getAvatar_url()).rounded();
+
+// If you want binding from drawable
+aq.id(R.id.image).image(R.drawable.profile);
+
+```
 ## Built With
 
 * [Okhttp](https://github.com/square/okhttp) - Networking Library.
 * [Glide](https://github.com/bumptech/glide) - Image Loading and caching.
-* [Gson](https://github.com/google/gson) - A Java serialization/deserialization
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+* [Gson](https://github.com/google/gson) - A Java serialization/deserialization for JSON.
 
 ## Authors
 
