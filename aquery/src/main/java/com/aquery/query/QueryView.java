@@ -121,4 +121,16 @@ public class QueryView {
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
     }
+
+    public void hide() {
+        view.setVisibility(View.GONE);
+    }
+
+    public void show() {
+        view.setVisibility(View.VISIBLE);
+    }
+
+    public <T> T as(Class<T> viewClass) {
+        return (T) view;
+    }
 }

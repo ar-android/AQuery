@@ -82,11 +82,27 @@ public class ViewHolder extends RecyclerView.ViewHolder{
 }
 ```
 
-After using AQuery :
+Query View :
 ```java
+// OnClickListener
 aq.id(R.id.login).click(v -> {
   // Do stuff
 });
+
+// Check is text not empty
+boolean valid = aq.id(R.id.input_email).isValid();
+
+// Get text value of view is avaliable
+String email = aq.id(R.id.input_email).text();
+
+// Set Visibilty Gone
+aq.id(R.id.input_email).hide();
+
+// Set Visibilty Visible
+aq.id(R.id.input_email).show();
+
+// Cast view
+DefaultTextField defaultTextField = aq.id(R.id.input_email).as(DefaultTextField.class);
 ```
 
 Also you can do ajax request like this :
