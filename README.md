@@ -37,10 +37,38 @@ Initializing AQuery :
 
 ```java
 // AQuery in Activity
-aq = new AQuery(this);
+
+public class MainActivity extends AppCompatActivity{
+
+    private AQuery aq;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        aq = new AQuery(this);
+    }
+}
 
 // AQuery in Fragment
-aq = new AQuery(getActivity());
+public class MainFragment extends Fragment{
+
+    private AQuery aq;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        aq = new AQuery(getActivity());
+    }
+}
 
 // AQuery in ViewHolder
 public class ViewHolder extends RecyclerView.ViewHolder{
