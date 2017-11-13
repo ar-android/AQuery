@@ -138,7 +138,7 @@ aq.id(R.id.image).image(R.drawable.profile);
 
 Query Toas :
 ```java
-Simple toas
+// Simple toas
 aq.snack("Message");
 aq.toast("Message");
 
