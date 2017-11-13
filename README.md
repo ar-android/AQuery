@@ -96,6 +96,16 @@ aq.id(R.id.image).image(R.drawable.profile);
 
 ```
 
+Key - value shared preferences :
+
+```java
+// Save string to shared preferences
+aq.saveString("token", response.getData().getToken());
+
+// Grab string from shared preferences
+String token aq.grabString("token");
+```
+
 Storing Database to SQLite :
 
 ```java
