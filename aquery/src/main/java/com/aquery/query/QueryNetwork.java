@@ -16,15 +16,21 @@ import com.ihsanbal.logging.Level;
 import com.ihsanbal.logging.LoggingInterceptor;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Headers;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.internal.platform.Platform;
 
@@ -77,6 +83,7 @@ public class QueryNetwork {
         request = new Request.Builder()
                 .url(url)
                 .get()
+                .addHeader("Accept", "application/json")
                 .build();
         return this;
     }
@@ -146,17 +153,45 @@ public class QueryNetwork {
     }
 
     private <T> T toObject(String json, Class<T> classOfT) {
-        return gson.fromJson(json, classOfT);
+        try {
+            return gson.fromJson(json, classOfT);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public <T> void toObject(final Class<T> clazz, final QueryNetworkObjectListener<T> listener) {
-        response((response, error) -> {
-            if (response != null) {
-                listener.response(toObject(response, clazz), null);
-            } else {
-                listener.response(null, error);
-            }
-        });
+        isShowLoading();
+        client.newCall(request)
+                .enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, final IOException e) {
+                        runOnMainThread(() -> {
+                            isHideLoading();
+                            listener.response(null, e);
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        final String body = response.body().string();
+                        try {
+                            T object = toObject(body, clazz);
+                            runOnMainThread(() -> {
+                                isHideLoading();
+                                if (object == null)
+                                    listener.response(null, new Exception(body));
+                                else
+                                    listener.response(object, null);
+                            });
+                        } catch (Exception e) {
+                            runOnMainThread(() -> {
+                                isHideLoading();
+                                listener.response(null, e);
+                            });
+                        }
+                    }
+                });
     }
 
     public QueryNetwork showLoading() {
@@ -187,16 +222,75 @@ public class QueryNetwork {
                 });
     }
 
+    String urlEncode(Map<String, String> map) {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
+            if (sb.length() > 0) {
+                sb.append("&");
+            }
+            sb.append(String.format("%s=%s",
+                    urlEncodeUtf8(entry.getKey().toString()),
+                    urlEncodeUtf8(entry.getValue().toString())
+            ));
+        }
+        return sb.toString();
+    }
+
+    String urlEncodeUtf8(String s) {
+        try {
+            return URLEncoder.encode(s, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new UnsupportedOperationException(e);
+        }
+    }
+
+    public QueryNetwork postUrlEncoded(Map<String, String> params) {
+        RequestBody body = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), urlEncode(params));
+        request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .addHeader("content-type", "application/x-www-form-urlencoded")
+                .build();
+        return this;
+    }
+
     public QueryNetwork post(Map<String, String> params) {
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), gson.toJson(params));
+        request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .addHeader("content-type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        return this;
+    }
+
+    public QueryNetwork addHeader(String key, String value) {
+        if (request != null) {
+            request = request.newBuilder()
+                    .addHeader(key, value)
+                    .addHeader("Accept", "application/json")
+                    .build();
+        }
+        return this;
+    }
+
+    public QueryNetwork postForm(Map<String, String> params) {
         MultipartBody.Builder form = new MultipartBody.Builder();
         form.setType(MultipartBody.FORM);
         for (Map.Entry<String, String> entry : params.entrySet()) {
             form.addFormDataPart(entry.getKey(), entry.getValue());
         }
         MultipartBody body = form.build();
+        postMultipartBody(body);
+        return this;
+    }
+
+    public QueryNetwork postMultipartBody(MultipartBody body) {
         request = new Request.Builder()
                 .url(url)
                 .post(body)
+                .addHeader("Accept", "application/json")
                 .build();
         return this;
     }

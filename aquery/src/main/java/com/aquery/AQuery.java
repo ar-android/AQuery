@@ -11,12 +11,14 @@ import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.aquery.query.QueryNetwork;
+import com.aquery.query.QuerySqlite;
 import com.aquery.query.QueryView;
 import com.aquery.utils.Loader;
 import com.google.gson.Gson;
@@ -97,6 +99,10 @@ public class AQuery {
 
     public void toast(String messages) {
         Toast.makeText(context, messages, Toast.LENGTH_SHORT).show();
+    }
+
+    public void snack(String message){
+        Snackbar.make(rootView, message, Snackbar.LENGTH_LONG).show();
     }
 
     public void runOnMainThread(Runnable runnable) {
@@ -192,4 +198,7 @@ public class AQuery {
         }
     }
 
+    public QuerySqlite sql() {
+        return new QuerySqlite(context);
+    }
 }

@@ -85,7 +85,7 @@ aq.ajax("https://ocit-tutorial.herokuapp.com/index.php")
 
 ```
 
-And you can too bind image to image view :
+Bind image to image view :
 
 ```java
 // If you want rounded image
@@ -96,6 +96,30 @@ aq.id(R.id.image).image(R.drawable.profile);
 
 ```
 
+Storing Database to SQLite :
+
+```java
+Map<String, Object> data = new HashMap<>();
+data.put("nama", "Putri Nuraini");
+data.put("email", "alahmadrosid@gmail.com");
+aq.sql().table("user").insert(data);
+```
+
+Aditional SQLite query :
+```java
+
+// Get All user from database
+List<Map<String, String>> user = aq.sql().table("user").all();
+
+// Update user database by id
+boolean update = aq.sql().table("user").update(3, data);
+
+// Get use by id
+Map<String, String> user = aq.sql().table("user").get(3);
+
+// Clear database sqlite
+aq.sql().clearDb();
+```
 And AQuery have a lot of API check it on [Documentation](https://ar-android.github.io/AQuery)
 
 ## Built With
