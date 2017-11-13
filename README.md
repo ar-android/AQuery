@@ -39,20 +39,20 @@ Initializing AQuery :
 // AQuery in Activity
 public class MainActivity extends AppCompatActivity{
 
-    private AQuery aq;
+    private AQuery $;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        aq = new AQuery(this);
+        $ = new AQuery(this);
     }
 }
 
 // AQuery in Fragment
 public class MainFragment extends Fragment{
 
-    private AQuery aq;
+    private AQuery $;
 
     @Nullable
     @Override
@@ -65,18 +65,18 @@ public class MainFragment extends Fragment{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        aq = new AQuery(getActivity());
+        $ = new AQuery(getActivity());
     }
 }
 
 // AQuery in ViewHolder
 public class ViewHolder extends RecyclerView.ViewHolder{
 
-    private AQuery aq;
+    private AQuery $;
 
     public ViewHolder(View itemView) {
         super(itemView);
-        aq = new AQuery(itemView.getContext(), itemView);
+        $ = new AQuery(itemView.getContext(), itemView);
     }
 }
 ```
@@ -84,62 +84,62 @@ public class ViewHolder extends RecyclerView.ViewHolder{
 Query Activity :
 ```java
 // Fast intent
-aq.open(HomeActivity.class);
+$.open(HomeActivity.class);
 
 // Custom intent
 Intent intent = new Intent(this, HomeActivity.class);
 intent.putExtra("id",1);
-aq.open(intent);
+$.open(intent);
 
 // Intent transition from left and right
-aq.openFromRight(HomeActivity.class);
-aq.openFromLeft(HomeActivity.class);
-aq.openFromRight(intent);
-aq.openFromLeft(intent);
+$.openFromRight(HomeActivity.class);
+$.openFromLeft(HomeActivity.class);
+$.openFromRight(intent);
+$.openFromLeft(intent);
 
 // Close activity transition
-aq.closeToRight();
-aq.closeToLeft();
+$.closeToRight();
+$.closeToLeft();
 ```
 
 Query View :
 ```java
 // OnClickListener
-aq.id(R.id.login).click(v -> {
+$.id(R.id.login).click(v -> {
   // Do stuff
 });
 
 // Check is text not empty
-boolean valid = aq.id(R.id.input_email).isValid();
+boolean valid = $.id(R.id.input_email).isValid();
 
 // Get text value of view is avaliable
-String email = aq.id(R.id.input_email).text();
+String email = $.id(R.id.input_email).text();
 
 // Set Visibilty Gone
-aq.id(R.id.input_email).hide();
+$.id(R.id.input_email).hide();
 
 // Set Visibilty Visible
-aq.id(R.id.input_email).show();
+$.id(R.id.input_email).show();
 
 // Cast view
-DefaultTextField defaultTextField = aq.id(R.id.input_email).as(DefaultTextField.class);
+DefaultTextField defaultTextField = $.id(R.id.input_email).as(DefaultTextField.class);
 
 // Active state View
-aq.id(R.id.input_email).active();
-aq.id(R.id.input_email).inActive();
+$.id(R.id.input_email).active();
+$.id(R.id.input_email).inActive();
 
 // If you want rounded image
-aq.id(R.id.image).image(user.getAvatar_url()).rounded();
+$.id(R.id.image).image(user.getAvatar_url()).rounded();
 
 // If you want set from drawable
-aq.id(R.id.image).image(R.drawable.profile);
+$.id(R.id.image).image(R.drawable.profile);
 ```
 
 Query Toas :
 ```java
 // Simple toas
-aq.snack("Message");
-aq.toast("Message");
+$.snack("Message");
+$.toast("Message");
 
 ```
 
@@ -147,7 +147,7 @@ Query Network :
 
 ```java
 // Ajax get
-aq.ajax("https://api.github.com/users/ar-android")
+$.ajax("https://api.github.com/users/ar-android")
         .get()
         .showLoading()
         .toObject(GithubUsers.class, (user, error) -> {
@@ -156,14 +156,14 @@ aq.ajax("https://api.github.com/users/ar-android")
 
 // Ajax POST form
 Map<String, String> params = new HashMap<>();
-params.put("email", aq.id(R.id.email).text());
-params.put("password", aq.id(R.id.password).text());
-aq.ajax("https://ocit-tutorial.herokuapp.com/index.php")
+params.put("email", $.id(R.id.email).text());
+params.put("password", $.id(R.id.password).text());
+$.ajax("https://ocit-tutorial.herokuapp.com/index.php")
         .postForm(params)
         .showLoading()
         .response((response, error) -> {
             if (response != null){
-                aq.openFromRight(MainActivity.class);
+                $.openFromRight(MainActivity.class);
             }
         });
 
@@ -173,10 +173,10 @@ Query Shared Preferences :
 
 ```java
 // Save string to shared preferences
-aq.saveString("token", response.getData().getToken());
+$.saveString("token", response.getData().getToken());
 
 // Grab string from shared preferences
-String token aq.grabString("token");
+String token $.grabString("token");
 ```
 
 Query SQLite :
@@ -186,28 +186,28 @@ Query SQLite :
 Map<String, Object> data = new HashMap<>();
 data.put("nama", "Putri Nuraini");
 data.put("email", "alahmadrosid@gmail.com");
-aq.sql().table("user").insert(data);
+$.sql().table("user").insert(data);
 
 // Get All row from table
-List<Map<String, String>> user = aq.sql().table("user").all();
+List<Map<String, String>> user = $.sql().table("user").all();
 
 // Update row from table by id
-boolean update = aq.sql().table("user").update(3, data);
+boolean update = $.sql().table("user").update(3, data);
 
 // Get row table by id
-Map<String, String> user = aq.sql().table("user").get(3);
+Map<String, String> user = $.sql().table("user").get(3);
 
 // Get table by first row
-Map<String, String> user = aq.sql().table("user").first();
+Map<String, String> user = $.sql().table("user").first();
 
 // Get table by last row
-Map<String, String> user = aq.sql().table("user").last();
+Map<String, String> user = $.sql().table("user").last();
 
 // Delete table by id
-boolean delete = aq.sql().table("user").delete(2);
+boolean delete = $.sql().table("user").delete(2);
 
 // Clear database sqlite
-aq.sql().clearDb();
+$.sql().clearDb();
 ```
 And AQuery have a lot of API check it on [Documentation](https://ar-android.github.io/AQuery)
 

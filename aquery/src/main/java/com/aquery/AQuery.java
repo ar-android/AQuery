@@ -74,6 +74,14 @@ public class AQuery {
         return queryView.setView(image);
     }
 
+    public String text(@IdRes int id) {
+        return id(id).text();
+    }
+
+    public boolean isValid(@IdRes int id) {
+        return id(id).isValid();
+    }
+
     public QueryNetwork ajax(String url) {
         return queryNetwork.setUrl(url);
     }
