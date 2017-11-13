@@ -69,6 +69,10 @@ public class AQuery {
                 .create();
     }
 
+    public long now(){
+        return System.currentTimeMillis();
+    }
+
     public QueryView id(@IdRes int id) {
         View image = rootView.findViewById(id);
         return queryView.setView(image);
