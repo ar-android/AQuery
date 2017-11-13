@@ -133,4 +133,12 @@ public class QueryView {
     public <T> T as(Class<T> viewClass) {
         return (T) view;
     }
+
+    public void active() {
+        view.setActivated(true);
+    }
+
+    public void inActive() {
+        view.setActivated(false);
+    }
 }

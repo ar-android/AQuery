@@ -103,6 +103,10 @@ aq.id(R.id.input_email).show();
 
 // Cast view
 DefaultTextField defaultTextField = aq.id(R.id.input_email).as(DefaultTextField.class);
+
+// Active state View
+aq.id(R.id.input_email).active();
+aq.id(R.id.input_email).inActive();
 ```
 
 Also you can do ajax request like this :
