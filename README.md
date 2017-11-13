@@ -75,7 +75,7 @@ params.put("email", aq.id(R.id.email).text());
 params.put("password", aq.id(R.id.password).text());
 
 aq.ajax("https://ocit-tutorial.herokuapp.com/index.php")
-        .post(params)
+        .postForm(params)
         .showLoading()
         .response((response, error) -> {
             if (response != null){
