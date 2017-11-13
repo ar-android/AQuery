@@ -82,6 +82,27 @@ public class ViewHolder extends RecyclerView.ViewHolder{
 }
 ```
 
+Query Activity :
+```
+// Fast intent
+aq.open(HomeActivity.class);
+
+// Custom intent
+Intent intent = new Intent(this, HomeActivity.class);
+intent.putExtra("id",1);
+aq.open(intent);
+
+// Intent transition from left and right
+aq.openFromRight(HomeActivity.class);
+aq.openFromLeft(HomeActivity.class);
+aq.openFromRight(intent);
+aq.openFromLeft(intent);
+
+// Close activity transition
+aq.closeToRight();
+aq.closeToLeft();
+```
+
 Query View :
 ```java
 // OnClickListener
@@ -113,6 +134,14 @@ aq.id(R.id.image).image(user.getAvatar_url()).rounded();
 
 // If you want set from drawable
 aq.id(R.id.image).image(R.drawable.profile);
+```
+
+Query Toas :
+```
+Simple toas
+aq.snack("Message");
+aq.toast("Message");
+
 ```
 
 Query Network :
