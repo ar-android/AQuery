@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.aquery.utils.DbHelper;
 
@@ -158,10 +159,21 @@ public class QuerySqlite {
 
         try {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
-            db.update(table, values, "id LIKE ?" + id, new String[]{String.valueOf(id)});
+            db.update(table, values, "id = ?" + id, new String[]{"" + id});
             db.close();
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
+            Log.d("", "updateError: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean delete(int id) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        try {
+            db.delete(table, "id=?", new String[]{"" + id});
+            return true;
+        } catch (Exception e) {
             return false;
         }
     }

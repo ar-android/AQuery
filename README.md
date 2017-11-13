@@ -108,20 +108,23 @@ aq.sql().table("user").insert(data);
 Aditional SQLite query :
 ```java
 
-// Get All user from database
+// Get All table from database
 List<Map<String, String>> user = aq.sql().table("user").all();
 
-// Update user database by id
+// Update table database by id
 boolean update = aq.sql().table("user").update(3, data);
 
-// Get use by id
+// Get table by id
 Map<String, String> user = aq.sql().table("user").get(3);
 
-// Get use by first row
+// Get table by first row
 Map<String, String> user = aq.sql().table("user").first();
 
-// Get use by last row
+// Get table by last row
 Map<String, String> user = aq.sql().table("user").last();
+
+// Delete table by id
+boolean delete = aq.sql().table("user").delete(2);
 
 // Clear database sqlite
 aq.sql().clearDb();
