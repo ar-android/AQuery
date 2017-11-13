@@ -37,7 +37,6 @@ Initializing AQuery :
 
 ```java
 // AQuery in Activity
-
 public class MainActivity extends AppCompatActivity{
 
     private AQuery aq;
