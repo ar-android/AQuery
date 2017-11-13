@@ -36,13 +36,22 @@ As we have metion before AQuery is just like JQuery but for quering in android. 
 Before using AQuery :
 
 ```java
-Button login = findViewById(R.id.login);
-login.setOnClickListener(new View.OnClickListenner(){
-    @Override
-    public void onClick(View v) {
-      // Do stuff
+// AQuery in Activity
+aq = new AQuery(this);
+
+// AQuery in Fragment
+aq = new AQuery(getActivity());
+
+// AQuery in ViewHolder
+public class ViewHolder extends RecyclerView.ViewHolder{
+
+    private AQuery aq;
+
+    public ViewHolder(View itemView) {
+        super(itemView);
+        aq = new AQuery(itemView.getContext(), itemView);
     }
-})
+}
 ```
 
 After using AQuery :
@@ -55,9 +64,6 @@ aq.id(R.id.login).click(v -> {
 Also you can do ajax request like this :
 
 ```java
-
-aq = new AQuery(this);
-
 aq.ajax("https://api.github.com/users/ar-android")
         .get()
         .showLoading()
