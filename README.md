@@ -83,7 +83,7 @@ public class ViewHolder extends RecyclerView.ViewHolder{
 ```
 
 Query Activity :
-```
+```java
 // Fast intent
 aq.open(HomeActivity.class);
 
@@ -137,7 +137,7 @@ aq.id(R.id.image).image(R.drawable.profile);
 ```
 
 Query Toas :
-```
+```java
 Simple toas
 aq.snack("Message");
 aq.toast("Message");
