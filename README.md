@@ -117,6 +117,12 @@ boolean update = aq.sql().table("user").update(3, data);
 // Get use by id
 Map<String, String> user = aq.sql().table("user").get(3);
 
+// Get use by last row
+Map<String, String> user = aq.sql().table("user").first();
+
+// Get use by first row
+Map<String, String> user = aq.sql().table("user").last();
+
 // Clear database sqlite
 aq.sql().clearDb();
 ```
