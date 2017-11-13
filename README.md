@@ -107,11 +107,18 @@ DefaultTextField defaultTextField = aq.id(R.id.input_email).as(DefaultTextField.
 // Active state View
 aq.id(R.id.input_email).active();
 aq.id(R.id.input_email).inActive();
+
+// If you want rounded image
+aq.id(R.id.image).image(user.getAvatar_url()).rounded();
+
+// If you want set from drawable
+aq.id(R.id.image).image(R.drawable.profile);
 ```
 
-Also you can do ajax request like this :
+Query Network :
 
 ```java
+// Ajax get
 aq.ajax("https://api.github.com/users/ar-android")
         .get()
         .showLoading()
@@ -119,15 +126,10 @@ aq.ajax("https://api.github.com/users/ar-android")
             // Do stuff
         });
 
-```
-
-And you can ajax request post too :
-
-```java
+// Ajax POST form
 Map<String, String> params = new HashMap<>();
 params.put("email", aq.id(R.id.email).text());
 params.put("password", aq.id(R.id.password).text());
-
 aq.ajax("https://ocit-tutorial.herokuapp.com/index.php")
         .postForm(params)
         .showLoading()
@@ -139,18 +141,7 @@ aq.ajax("https://ocit-tutorial.herokuapp.com/index.php")
 
 ```
 
-Bind image to image view :
-
-```java
-// If you want rounded image
-aq.id(R.id.image).image(user.getAvatar_url()).rounded();
-
-// If you want set from drawable
-aq.id(R.id.image).image(R.drawable.profile);
-
-```
-
-Key - value shared preferences :
+Query Shared Preferences :
 
 ```java
 // Save string to shared preferences
@@ -160,25 +151,22 @@ aq.saveString("token", response.getData().getToken());
 String token aq.grabString("token");
 ```
 
-Storing Database to SQLite :
+Query SQLite :
 
 ```java
+//Storing data to SQLite
 Map<String, Object> data = new HashMap<>();
 data.put("nama", "Putri Nuraini");
 data.put("email", "alahmadrosid@gmail.com");
 aq.sql().table("user").insert(data);
-```
 
-Aditional SQLite query :
-```java
-
-// Get All table from database
+// Get All row from table
 List<Map<String, String>> user = aq.sql().table("user").all();
 
-// Update table database by id
+// Update row from table by id
 boolean update = aq.sql().table("user").update(3, data);
 
-// Get table by id
+// Get row table by id
 Map<String, String> user = aq.sql().table("user").get(3);
 
 // Get table by first row
