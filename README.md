@@ -33,7 +33,7 @@ implementation 'com.github.ar-android:AQuery:v1.0.0'
 
 As we have metion before AQuery is just like JQuery but for quering in android. Bellow example of use case.
 
-Before using AQuery :
+Initializing AQuery :
 
 ```java
 // AQuery in Activity
