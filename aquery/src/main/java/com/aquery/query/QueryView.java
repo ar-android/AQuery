@@ -1,6 +1,7 @@
 package com.aquery.query;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -140,5 +141,10 @@ public class QueryView {
 
     public void inActive() {
         view.setActivated(false);
+    }
+
+    public QueryView id(@IdRes int id) {
+        View viewById = view.findViewById(id);
+        return setView(viewById);
     }
 }

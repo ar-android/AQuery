@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.aquery.query.QueryDate;
 import com.aquery.query.QueryNetwork;
 import com.aquery.query.QuerySqlite;
 import com.aquery.query.QueryView;
@@ -212,5 +213,13 @@ public class AQuery {
 
     public QuerySqlite sql() {
         return new QuerySqlite(context);
+    }
+
+    public QueryDate date() {
+        return new QueryDate(now());
+    }
+
+    public void clearPref() {
+        pref.edit().clear().apply();
     }
 }
