@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.aquery.utils.ImageRounded;
@@ -37,7 +38,7 @@ public class QueryView {
         return this;
     }
 
-    public void text(String text) {
+    public QueryView text(String text) {
         if (view instanceof TextView) {
             TextView textView = (TextView) view;
             textView.setText(text);
@@ -47,7 +48,11 @@ public class QueryView {
         } else if (view instanceof AppCompatEditText) {
             AppCompatEditText appCompatEditText = (AppCompatEditText) view;
             appCompatEditText.setText(text);
+        }else if (view instanceof RadioButton){
+            RadioButton radioButton = (RadioButton) view;
+            radioButton.setText(text);
         }
+        return this;
     }
 
     public String text() {
@@ -146,5 +151,14 @@ public class QueryView {
     public QueryView id(@IdRes int id) {
         View viewById = view.findViewById(id);
         return setView(viewById);
+    }
+
+    public void disable() {
+        view.setEnabled(false);
+    }
+
+    public QueryView enable() {
+        view.setEnabled(true);
+        return this;
     }
 }
