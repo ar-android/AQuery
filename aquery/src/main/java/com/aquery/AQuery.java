@@ -45,20 +45,16 @@ public class AQuery {
     public AQuery(Context context) {
         this.context = context;
         rootView = ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
-        queryView = new QueryView(context);
-        queryNetwork = new QueryNetwork(context);
-        alert = new AlertDialog.Builder(context);
-        loader = new Loader(context);
-        pref = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-        gson = new GsonBuilder()
-                .serializeNulls()
-                .setPrettyPrinting()
-                .create();
+        initialize(context);
     }
 
     public AQuery(Context context, View rootView) {
         this.context = context;
         this.rootView = rootView;
+        initialize(context);
+    }
+    
+    private initialize(Context context) {
         queryView = new QueryView(context);
         queryNetwork = new QueryNetwork(context);
         alert = new AlertDialog.Builder(context);
@@ -75,8 +71,7 @@ public class AQuery {
     }
 
     public QueryView id(@IdRes int id) {
-        View image = rootView.findViewById(id);
-        return queryView.setView(image);
+        return queryView.setView(rootView.findViewById(id));
     }
 
     public String text(@IdRes int id) {
