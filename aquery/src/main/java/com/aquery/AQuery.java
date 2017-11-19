@@ -121,7 +121,7 @@ public class AQuery {
         loader.hide();
     }
 
-    public void hidePopupLoadin() {
+    public void hidePopupLoading() {
         loader.hide();
     }
 
