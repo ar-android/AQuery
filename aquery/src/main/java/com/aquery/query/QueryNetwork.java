@@ -274,6 +274,16 @@ public class QueryNetwork {
         }
         return this;
     }
+    
+    public QueryNetwork addHeaders(Map<String, String> params) {
+        if (request != null) {
+            request = request.newBuilder()
+                    .addHeaders(params)
+                    .addHeader("Accept", "application/json")
+                    .build();
+        }
+        return this;
+    }
 
     public QueryNetwork postForm(Map<String, String> params) {
         MultipartBody.Builder form = new MultipartBody.Builder();
