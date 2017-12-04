@@ -33,7 +33,16 @@ public class QuerySqlite {
         field_value = new ArrayList<>();
     }
 
-    public void clearDb() {
+    public QuerySqlite(Context context, String table) {
+        this.context = context;
+        String db_name = context.getPackageName() + "db";
+        dbHelper = new DbHelper(context, db_name);
+        field_table = new ArrayList<>();
+        field_value = new ArrayList<>();
+        this.table = table;
+    }
+
+    public void clear() {
         String db_name = context.getPackageName() + "db";
         context.deleteDatabase(db_name);
     }
@@ -44,7 +53,6 @@ public class QuerySqlite {
     }
 
     public void insert(Map<String, Object> data) {
-
         ContentValues values = new ContentValues();
         for (Map.Entry<String, Object> entry : data.entrySet()) {
             field_table.add(entry.getKey());
@@ -54,7 +62,7 @@ public class QuerySqlite {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         StringBuilder queryMakeTable = new StringBuilder("CREATE TABLE IF NOT EXISTS " + table);
         for (int i = 0; i < field_table.size(); i++) {
-            String start = "(id INTEGER PRIMARY KEY, ";
+            String start = "(tableId INTEGER PRIMARY KEY, ";
             if (i > 0)
                 start = ", ";
             String item_field_table = start + field_table.get(i) + " TEXT";
@@ -99,12 +107,12 @@ public class QuerySqlite {
         try {
             Cursor cursor = db.rawQuery("SELECT * FROM " + table, null);
             cursor.moveToFirst();
-            String[] colums = cursor.getColumnNames();
+            String[] columns = cursor.getColumnNames();
             Map<String, String> result = new HashMap<>();
-            for (int j = 0; j < colums.length; j++) {
-                String colum = colums[j];
+            for (int j = 0; j < columns.length; j++) {
+                String column = columns[j];
                 String value = cursor.getString(j);
-                result.put(colum, value);
+                result.put(column, value);
             }
             cursor.close();
             return result;
@@ -118,12 +126,12 @@ public class QuerySqlite {
         try {
             Cursor cursor = db.rawQuery("SELECT * FROM " + table, null);
             cursor.moveToLast();
-            String[] colums = cursor.getColumnNames();
+            String[] columns = cursor.getColumnNames();
             Map<String, String> result = new HashMap<>();
-            for (int j = 0; j < colums.length; j++) {
-                String colum = colums[j];
+            for (int j = 0; j < columns.length; j++) {
+                String column = columns[j];
                 String value = cursor.getString(j);
-                result.put(colum, value);
+                result.put(column, value);
             }
             cursor.close();
             return result;
@@ -132,17 +140,17 @@ public class QuerySqlite {
         }
     }
 
-    public Map<String, String> get(int id) {
+    public Map<String, String> get(int tableId) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         try {
-            Cursor cursor = db.rawQuery("SELECT * FROM " + table + " WHERE id=" + id, null);
+            Cursor cursor = db.rawQuery("SELECT * FROM " + table + " WHERE tableId=" + tableId, null);
             cursor.moveToFirst();
-            String[] colums = cursor.getColumnNames();
+            String[] columns = cursor.getColumnNames();
             Map<String, String> result = new HashMap<>();
-            for (int j = 0; j < colums.length; j++) {
-                String colum = colums[j];
+            for (int j = 0; j < columns.length; j++) {
+                String column = columns[j];
                 String value = cursor.getString(j);
-                result.put(colum, value);
+                result.put(column, value);
             }
             cursor.close();
             return result;
@@ -151,7 +159,7 @@ public class QuerySqlite {
         }
     }
 
-    public boolean update(int id, Map<String, Object> data) {
+    public boolean update(int tableId, Map<String, Object> data) {
         ContentValues values = new ContentValues();
         for (Map.Entry<String, Object> entry : data.entrySet()) {
             values.put(entry.getKey(), String.valueOf(entry.getValue()));
@@ -159,7 +167,7 @@ public class QuerySqlite {
 
         try {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
-            db.update(table, values, "id = ?" + id, new String[]{"" + id});
+            db.update(table, values, "tableId = ?" + tableId, new String[]{"" + tableId});
             db.close();
             return true;
         } catch (Exception e) {
@@ -168,13 +176,17 @@ public class QuerySqlite {
         }
     }
 
-    public boolean delete(int id) {
+    public boolean delete(int tableId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         try {
-            db.delete(table, "id=?", new String[]{"" + id});
+            db.delete(table, "tableId=?", new String[]{"" + tableId});
             return true;
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public boolean isEmpty() {
+        return get(1) == null;
     }
 }

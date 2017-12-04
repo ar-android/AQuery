@@ -18,7 +18,6 @@ import com.ihsanbal.logging.LoggingInterceptor;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -40,16 +39,15 @@ import okhttp3.internal.platform.Platform;
 
 public class QueryNetwork {
 
-    private Context context;
     private String url;
     private OkHttpClient client;
     private Request request;
     private Gson gson;
     private ProgressDialog mProgressDialog;
     private boolean showLoading = false;
+    private HttpUrl.Builder queryUrl;
 
     public QueryNetwork(Context context) {
-        this.context = context.getApplicationContext();
         client = new OkHttpClient.Builder()
                 .addInterceptor(new LoggingInterceptor.Builder()
                         .loggable(BuildConfig.DEBUG)
@@ -80,6 +78,9 @@ public class QueryNetwork {
     }
 
     public QueryNetwork get() {
+        if (queryUrl != null)
+            url = queryUrl.toString();
+        Log.d("ResponseURL", "get: " + url);
         request = new Request.Builder()
                 .url(url)
                 .get()
@@ -245,6 +246,8 @@ public class QueryNetwork {
     }
 
     public QueryNetwork postUrlEncoded(Map<String, String> params) {
+        if (queryUrl != null)
+            url = queryUrl.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), urlEncode(params));
         request = new Request.Builder()
                 .url(url)
@@ -255,6 +258,8 @@ public class QueryNetwork {
     }
 
     public QueryNetwork post(Map<String, String> params) {
+        if (queryUrl != null)
+            url = queryUrl.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), gson.toJson(params));
         request = new Request.Builder()
                 .url(url)
@@ -275,7 +280,19 @@ public class QueryNetwork {
         return this;
     }
 
+    public QueryNetwork addHeader(Map<String, String> headers) {
+        if (request != null) {
+            request = request.newBuilder()
+                    .headers(Headers.of(headers))
+                    .addHeader("Accept", "application/json")
+                    .build();
+        }
+        return this;
+    }
+
     public QueryNetwork postForm(Map<String, String> params) {
+        if (queryUrl != null)
+            url = queryUrl.toString();
         MultipartBody.Builder form = new MultipartBody.Builder();
         form.setType(MultipartBody.FORM);
         for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -287,11 +304,27 @@ public class QueryNetwork {
     }
 
     public QueryNetwork postMultipartBody(MultipartBody body) {
+        if (queryUrl != null)
+            url = queryUrl.toString();
         request = new Request.Builder()
                 .url(url)
                 .post(body)
                 .addHeader("Accept", "application/json")
                 .build();
+        return this;
+    }
+
+    public QueryNetwork addQuery(String key, String value) {
+        if (queryUrl == null)
+            queryUrl = HttpUrl.parse(url).newBuilder();
+        queryUrl.addQueryParameter(key, value);
+        return this;
+    }
+
+    public QueryNetwork addPath(int path) {
+        if (queryUrl == null)
+            queryUrl = HttpUrl.parse(url).newBuilder();
+        queryUrl.addPathSegment(String.valueOf(path));
         return this;
     }
 }

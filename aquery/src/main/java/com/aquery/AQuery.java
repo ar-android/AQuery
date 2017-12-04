@@ -11,10 +11,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.aquery.query.QueryDate;
@@ -35,7 +35,6 @@ public class AQuery {
     private View rootView;
 
     private QueryView queryView;
-    private QueryNetwork queryNetwork;
 
     private AlertDialog.Builder alert;
     private Loader loader;
@@ -46,7 +45,6 @@ public class AQuery {
         this.context = context;
         rootView = ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
         queryView = new QueryView(context);
-        queryNetwork = new QueryNetwork(context);
         alert = new AlertDialog.Builder(context);
         loader = new Loader(context);
         pref = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
@@ -60,7 +58,6 @@ public class AQuery {
         this.context = context;
         this.rootView = rootView;
         queryView = new QueryView(context);
-        queryNetwork = new QueryNetwork(context);
         alert = new AlertDialog.Builder(context);
         loader = new Loader(context);
         pref = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
@@ -70,7 +67,11 @@ public class AQuery {
                 .create();
     }
 
-    public long now(){
+    public AQuery(View itemView) {
+        this(itemView.getContext(), itemView);
+    }
+
+    public long now() {
         return System.currentTimeMillis();
     }
 
@@ -88,7 +89,7 @@ public class AQuery {
     }
 
     public QueryNetwork ajax(String url) {
-        return queryNetwork.setUrl(url);
+        return new QueryNetwork(context).setUrl(url);
     }
 
     public void alert(String messages) {
@@ -114,16 +115,12 @@ public class AQuery {
         Toast.makeText(context, messages, Toast.LENGTH_SHORT).show();
     }
 
-    public void snack(String message){
-        Snackbar.make(rootView, message, Snackbar.LENGTH_LONG).show();
-    }
-
     public void runOnMainThread(Runnable runnable) {
         new Handler(Looper.getMainLooper()).post(runnable);
     }
 
     public void showPopupLoading() {
-        loader.hide();
+        loader.show();
     }
 
     public void hidePopupLoadin() {
@@ -179,6 +176,12 @@ public class AQuery {
         activity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
 
+    public void startActivityResult(Class target, int requestCode) {
+        Activity activity = (Activity) context;
+        Intent intent = new Intent(activity, target);
+        activity.startActivityForResult(intent, requestCode);
+    }
+
     public <T> T toObject(String json, Class<T> classOfT) {
         return gson.fromJson(json, classOfT);
     }
@@ -215,11 +218,34 @@ public class AQuery {
         return new QuerySqlite(context);
     }
 
+    public QuerySqlite sql(String table) {
+        return new QuerySqlite(context, table);
+    }
+
     public QueryDate date() {
         return new QueryDate(now());
     }
 
     public void clearPref() {
         pref.edit().clear().apply();
+    }
+
+    public void hideToolbar() {
+        android.support.v7.app.ActionBar actionBar = ((AppCompatActivity) context).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public boolean isValid(EditText input) {
+        return view(input).isValid();
+    }
+
+    public String text(EditText input) {
+        return view(input).text();
     }
 }

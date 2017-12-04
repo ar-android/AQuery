@@ -6,6 +6,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -27,10 +28,16 @@ public class QueryView {
     private View view;
     private Context context;
     private Object source;
+    private LinearLayoutManager linearLayoutManager;
 
     public QueryView(Context context) {
         this.context = context;
-        requestManager = Glide.with(context);
+        linearLayoutManager = new LinearLayoutManager(context);
+        try {
+            requestManager = Glide.with(context);
+        } catch (Exception e) {
+
+        }
     }
 
     public QueryView setView(View view) {
@@ -48,7 +55,7 @@ public class QueryView {
         } else if (view instanceof AppCompatEditText) {
             AppCompatEditText appCompatEditText = (AppCompatEditText) view;
             appCompatEditText.setText(text);
-        }else if (view instanceof RadioButton){
+        } else if (view instanceof RadioButton) {
             RadioButton radioButton = (RadioButton) view;
             radioButton.setText(text);
         }
@@ -112,7 +119,7 @@ public class QueryView {
     }
 
     public QueryView adapter(RecyclerView.Adapter adapter) {
-        ((RecyclerView) view).setLayoutManager(new LinearLayoutManager(context));
+        ((RecyclerView) view).setLayoutManager(linearLayoutManager);
         ((RecyclerView) view).setAdapter(adapter);
         return this;
     }
@@ -160,5 +167,23 @@ public class QueryView {
     public QueryView enable() {
         view.setEnabled(true);
         return this;
+    }
+
+    public LinearLayoutManager getLinearLayoutManager() {
+        return linearLayoutManager;
+    }
+
+    public void staggeredGrid(int rowSpan) {
+        as(RecyclerView.class)
+                .setLayoutManager(new StaggeredGridLayoutManager(rowSpan, StaggeredGridLayoutManager.VERTICAL));
+    }
+
+    public int integer() {
+        if (view instanceof TextView) {
+            TextView textView = (TextView) view;
+            return Integer.parseInt(textView.getText().toString());
+        } else {
+            return 0;
+        }
     }
 }
