@@ -8,9 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/aquery" />
-            <option value="$PROJECT_DIR$/filemku" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

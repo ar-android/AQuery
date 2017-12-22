@@ -80,10 +80,20 @@ public class QueryNetwork {
     public QueryNetwork get() {
         if (queryUrl != null)
             url = queryUrl.toString();
-        Log.d("ResponseURL", "get: " + url);
         request = new Request.Builder()
                 .url(url)
                 .get()
+                .addHeader("Accept", "application/json")
+                .build();
+        return this;
+    }
+
+    public QueryNetwork delete() {
+        if (queryUrl != null)
+            url = queryUrl.toString();
+        request = new Request.Builder()
+                .url(url)
+                .delete()
                 .addHeader("Accept", "application/json")
                 .build();
         return this;
