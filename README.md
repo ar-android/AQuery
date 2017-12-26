@@ -26,7 +26,7 @@ compileOptions {
 Add the dependency in you app build.gradle :
 
 ```gradle
-implementation 'com.github.ar-android:AQuery:v1.0.1'
+implementation 'com.github.ar-android:AQuery:1.0.3'
 ```
 
 ## Use Case
