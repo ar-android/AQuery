@@ -176,7 +176,7 @@ Query Shared Preferences :
 aq.saveString("token", response.getData().getToken());
 
 // Grab string from shared preferences
-String token aq.grabString("token");
+String token = aq.grabString("token");
 ```
 
 Query SQLite :
